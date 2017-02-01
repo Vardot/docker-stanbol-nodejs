@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+   stanbol:
+     image: mxr576/stanbol
+     restart: always
+     ports:
+        - "8070:8080"
+
+   stanbol-nodejs:
+     build: .
+     depends_on:
+        - stanbol
+     ports:
+       - "8071:8071"
+     restart: always
+     environment:
+       STANBOL_URL: "http://stanbol:8080/enhancer/chain/dbpedia-fst-linking"
+       SOCKET_PORT: 8071
